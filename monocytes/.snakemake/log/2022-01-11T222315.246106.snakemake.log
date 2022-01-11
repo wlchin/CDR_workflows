@@ -1,0 +1,14 @@
+Building DAG of jobs...
+Deleting results/heatmaps_1002.png
+Deleting results/barplot_1002.png
+Deleting results/CDR_done.h5ad
+Deleting results/mono_preprocessed.h5ad
+Deleting downloaded_data/gene2go
+Deleting downloaded_data/PANTHERGOslim.obo
+Deleting results/h_intersection.txt
+Deleting results/h_CDR_only.txt
+Deleting results/h_DE_only.txt
+Deleting results/low_thresh_mono_de.csv
+Deleting results/high_thresh_mono_de.csv
+Deleting results/low_thresh_delist.csv
+Deleting results/high_thresh_delist.csv

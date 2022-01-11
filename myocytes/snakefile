@@ -1,0 +1,42 @@
+
+rule all:
+    input:
+        "results/muscle_factors.png",
+        "results/muscle_genes.png"
+
+rule download_ontology_files:
+    input:
+        "resources/files.txt"
+    output:
+        "downloaded_data/gene2go",
+        "downloaded_data/PANTHERGOslim.obo"
+    shell:
+        "wget -P downloaded_data -i {input}; gunzip downloaded_data/*.gz"
+        
+rule filter_genes:
+    input:
+        "resources/muscle_data.h5ad"
+    output:
+        "results/myocytes_processed.h5ad"
+    script:
+        "scripts/muscle_dataset_preprocessing.py"
+
+rule run_CDR:
+    input:
+        "results/myocytes_processed.h5ad",
+        "downloaded_data/gene2go",
+        "downloaded_data/PANTHERGOslim.obo"
+    output:
+        "results/CDR_done.h5ad"
+    script:
+        "scripts/run_CDR_muscle.py"
+
+rule plot_figures:
+    input:
+        "results/CDR_done.h5ad"
+    output:
+        "results/muscle_factors.png",
+        "results/muscle_genes.png"
+    script:
+        "scripts/plot_figures_myocytes.py"
+    

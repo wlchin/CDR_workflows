@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 24 of /data3/CDR_paper/CDR_software/CDR_workflow/myocytes/snakefile:
+Missing input files for rule run_CDR:
+results/myocytes_processed.h5addownloaded_data/gene2go

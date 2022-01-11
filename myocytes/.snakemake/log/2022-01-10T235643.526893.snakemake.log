@@ -1,0 +1,29 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	plot_figures
+	2
+
+[Mon Jan 10 23:56:43 2022]
+rule plot_figures:
+    input: results/CDR_done.h5ad
+    output: results/muscle_factors.png, results/muscle_genes.png
+    jobid: 1
+
+[Mon Jan 10 23:56:44 2022]
+Error in rule plot_figures:
+    jobid: 1
+    output: results/muscle_factors.png, results/muscle_genes.png
+
+RuleException:
+CalledProcessError in line 41 of /data3/CDR_paper/CDR_software/CDR_workflow/myocytes/snakefile:
+Command 'set -euo pipefail;  /usr/bin/python3 /data3/CDR_paper/CDR_software/CDR_workflow/myocytes/.snakemake/scripts/tmpewvim7dh.plot_figures_myocytes.py' returned non-zero exit status 1.
+  File "/data3/CDR_paper/CDR_software/CDR_workflow/myocytes/snakefile", line 41, in __rule_plot_figures
+  File "/usr/lib/python3.8/concurrent/futures/thread.py", line 57, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /data3/CDR_paper/CDR_software/CDR_workflow/myocytes/.snakemake/log/2022-01-10T235643.526893.snakemake.log

@@ -1,0 +1,72 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                        count    min threads    max threads
+-----------------------  -------  -------------  -------------
+all                            1              1              1
+download_ontology_files        1              1              1
+filter_genes                   1              1              1
+plot_figures                   1              1              1
+run_CDR                        1              1              1
+total                          5              1              1
+
+Select jobs to execute...
+
+[Mon Jan 10 22:41:21 2022]
+rule filter_genes:
+    input: resources/muscle_data.h5ad
+    output: results/myocytes_processed.h5ad
+    jobid: 3
+    resources: tmpdir=/tmp
+
+[Mon Jan 10 22:41:24 2022]
+Finished job 3.
+1 of 5 steps (20%) done
+Select jobs to execute...
+
+[Mon Jan 10 22:41:24 2022]
+rule download_ontology_files:
+    input: resources/files.txt
+    output: downloaded_data/gene2go, downloaded_data/PANTHERGOslim.obo
+    jobid: 4
+    resources: tmpdir=/tmp
+
+[Mon Jan 10 22:41:33 2022]
+Finished job 4.
+2 of 5 steps (40%) done
+Select jobs to execute...
+
+[Mon Jan 10 22:41:33 2022]
+rule run_CDR:
+    input: results/myocytes_processed.h5ad, downloaded_data/gene2go, downloaded_data/PANTHERGOslim.obo
+    output: results/CDR_done.h5ad
+    jobid: 2
+    resources: tmpdir=/tmp
+
+[Mon Jan 10 23:22:22 2022]
+Finished job 2.
+3 of 5 steps (60%) done
+Select jobs to execute...
+
+[Mon Jan 10 23:22:22 2022]
+rule plot_figures:
+    input: results/CDR_done.h5ad
+    output: results/muscle_factors.png, results/muscle_genes.png
+    jobid: 1
+    resources: tmpdir=/tmp
+
+[Mon Jan 10 23:22:22 2022]
+Error in rule plot_figures:
+    jobid: 1
+    output: results/muscle_factors.png, results/muscle_genes.png
+
+WorkflowError:
+Failed to open source file /data3/CDR_paper/CDR_software/CDR_workflow/myocytes/plot_figures_myocytes.py
+FileNotFoundError: [Errno 2] No such file or directory: '/data3/CDR_paper/CDR_software/CDR_workflow/myocytes/plot_figures_myocytes.py'
+  File "/home/ubuntu/miniconda3/envs/pyenv/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+  File "/data3/CDR_paper/CDR_software/CDR_workflow/myocytes/snakefile", line 90, in __rule_plot_figures
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /data3/CDR_paper/CDR_software/CDR_workflow/myocytes/.snakemake/log/2022-01-10T224121.896045.snakemake.log

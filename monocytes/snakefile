@@ -1,0 +1,77 @@
+rule all:
+    input:
+        "results/heatmaps_1002.png",
+        "results/barplot_1002.png",
+
+rule download_ontology_files:
+    input:
+        "resources/files.txt"
+    output:
+        "downloaded_data/gene2go",
+        "downloaded_data/PANTHERGOslim.obo"
+    shell:
+        "wget -P downloaded_data -i {input}; gunzip downloaded_data/*.gz"
+
+rule filter_genes:
+    input:
+        "resources/raw_monocyte_CD14.h5ad"
+    output:
+        "results/mono_preprocessed.h5ad"
+    script:
+        "scripts/monocyte_dataset_preprocessing.py"
+
+rule run_CDR_and_enrichment:
+    input:
+        "results/mono_preprocessed.h5ad",
+        "downloaded_data/gene2go",
+        "downloaded_data/PANTHERGOslim.obo"
+    output:
+        "results/CDR_done.h5ad"
+    script:
+        "scripts/run_CDR_monocyte.py"
+
+rule do_DE_and_enrichment:
+    input:
+        "results/mono_preprocessed.h5ad",
+        "downloaded_data/gene2go",
+        "downloaded_data/PANTHERGOslim.obo"
+    output:
+        "results/low_thresh_mono_de.csv",
+        "results/high_thresh_mono_de.csv",
+        "results/low_thresh_delist.csv",
+        "results/high_thresh_delist.csv"
+    script:
+        "scripts/DE_analysis.py"
+
+rule compare_CDR_to_DE_low_thresh:
+    input:
+        "results/CDR_done.h5ad",
+        "results/low_thresh_mono_de.csv"
+    output:
+        "results/l_intersection.txt",
+        "results/l_CDR_only.txt",
+        "results/l_DE_only.txt"
+    script:
+        "scripts/analyse_intersection.py"
+
+rule compare_CDR_to_DE_high_thresh:
+    input:
+        "results/CDR_done.h5ad",
+        "results/high_thresh_mono_de.csv"
+    output:
+        "results/h_intersection.txt",
+        "results/h_CDR_only.txt",
+        "results/h_DE_only.txt"
+    script:
+        "scripts/analyse_intersection.py"
+
+rule plot_diagrams:
+    input:
+        "results/CDR_done.h5ad",
+        "results/h_DE_only.txt"
+    output:
+        "results/heatmaps_1002.png",
+        "results/barplot_1002.png"
+    script:
+        "scripts/plot_figures_monocytes.py"
+

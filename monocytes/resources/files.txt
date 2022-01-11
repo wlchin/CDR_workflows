@@ -1,0 +1,2 @@
+http://data.pantherdb.org/PANTHER16.0/ontology/PANTHERGOslim.obo
+https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene2go.gz

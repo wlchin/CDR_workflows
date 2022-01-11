@@ -1,0 +1,6 @@
+https://ftp.ncbi.nlm.nih.gov/geo/series/GSE115nnn/GSE115978/suppl/GSE115978%5Ftpm%2Ecsv%2Egz
+https://ftp.ncbi.nlm.nih.gov/geo/series/GSE115nnn/GSE115978/suppl/GSE115978%5Fcell%2Eannotations%2Ecsv%2Egz
+https://ftp.ncbi.nlm.nih.gov/geo/series/GSE120nnn/GSE120575/suppl/GSE120575%5FSade%5FFeldman%5Fmelanoma%5Fsingle%5Fcells%5FTPM%5FGEO%2Etxt%2Egz
+https://ftp.ncbi.nlm.nih.gov/geo/series/GSE120nnn/GSE120575/suppl/GSE120575%5Fpatient%5FID%5Fsingle%5Fcells%2Etxt%2Egz
+http://data.pantherdb.org/PANTHER16.0/ontology/PANTHERGOslim.obo
+https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene2go.gz

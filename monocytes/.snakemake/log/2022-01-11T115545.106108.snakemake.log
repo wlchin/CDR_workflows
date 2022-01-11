@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 1 of /data3/CDR_paper/CDR_software/CDR_workflow/monocytes/snakefile:
+Missing input files for rule all:
+results/heatmaps_1002.pngresults/barplot_1002.png

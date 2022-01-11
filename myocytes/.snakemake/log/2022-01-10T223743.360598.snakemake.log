@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 16 of /data3/CDR_paper/CDR_software/CDR_workflow/myocytes/snakefile:
+Missing input files for rule filter_genes:
+raw_datasets/muscle_data.h5ad

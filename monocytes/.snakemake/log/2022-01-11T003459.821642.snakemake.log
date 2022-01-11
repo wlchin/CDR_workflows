@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 72 of /data3/CDR_paper/CDR_software/CDR_workflow/monocytes/snakefile:
+Missing input files for rule do_DE_and_enrichment:
+results/mono_preprocessed.h5addownloaded_data/gene2go

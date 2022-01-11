@@ -1,0 +1,57 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                              count    min threads    max threads
+-----------------------------  -------  -------------  -------------
+all                                  1              1              1
+compare_CDR_to_DE_high_thresh        1              1              1
+do_DE_and_enrichment                 1              1              1
+download_ontology_files              1              1              1
+filter_genes                         1              1              1
+plot_diagrams                        1              1              1
+run_CDR_and_enrichment               1              1              1
+total                                7              1              1
+
+Select jobs to execute...
+
+[Tue Jan 11 00:35:30 2022]
+rule filter_genes:
+    input: resources/raw_monocyte_CD14.h5ad
+    output: results/mono_preprocessed.h5ad
+    jobid: 3
+    resources: tmpdir=/tmp
+
+[Tue Jan 11 00:35:33 2022]
+Finished job 3.
+1 of 7 steps (14%) done
+Select jobs to execute...
+
+[Tue Jan 11 00:35:33 2022]
+rule download_ontology_files:
+    input: resources/files.txt
+    output: downloaded_data/gene2go, downloaded_data/PANTHERGOslim.obo
+    jobid: 4
+    resources: tmpdir=/tmp
+
+[Tue Jan 11 00:35:42 2022]
+Finished job 4.
+2 of 7 steps (29%) done
+Select jobs to execute...
+
+[Tue Jan 11 00:35:42 2022]
+rule do_DE_and_enrichment:
+    input: results/mono_preprocessed.h5ad, downloaded_data/gene2go, downloaded_data/PANTHERGOslim.obo
+    output: results/low_thresh_mono_de.csv, results/high_thresh_mono_de.csv, results/low_thresh_delist.csv, results/high_thresh_delist.csv
+    jobid: 6
+    resources: tmpdir=/tmp
+
+[Tue Jan 11 00:35:44 2022]
+Error in rule do_DE_and_enrichment:
+    jobid: 6
+    output: results/low_thresh_mono_de.csv, results/high_thresh_mono_de.csv, results/low_thresh_delist.csv, results/high_thresh_delist.csv
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /data3/CDR_paper/CDR_software/CDR_workflow/monocytes/.snakemake/log/2022-01-11T003530.158748.snakemake.log

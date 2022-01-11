@@ -1,0 +1,30 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count    min threads    max threads
+------------  -------  -------------  -------------
+all                 1              1              1
+plot_figures        1              1              1
+total               2              1              1
+
+Select jobs to execute...
+
+[Tue Jan 11 00:30:56 2022]
+rule plot_figures:
+    input: results/CDR_done.h5ad
+    output: results/muscle_factors.png, results/muscle_genes.png
+    jobid: 1
+    resources: tmpdir=/tmp
+
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 73 of /data3/CDR_paper/CDR_software/CDR_workflow/myocytes/snakefile:
+Job Missing files after 5 seconds:
+results/muscle_factors.png
+results/muscle_genes.png
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Job id: 1 completed successfully, but some output files are missing. 1
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /data3/CDR_paper/CDR_software/CDR_workflow/myocytes/.snakemake/log/2022-01-11T003056.699606.snakemake.log

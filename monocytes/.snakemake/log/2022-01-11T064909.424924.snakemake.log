@@ -1,0 +1,32 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	compare_CDR_to_DE_high_thresh
+	1	do_DE_and_enrichment
+	1	plot_diagrams
+	1	run_CDR_and_enrichment
+	5
+
+[Tue Jan 11 06:49:09 2022]
+rule do_DE_and_enrichment:
+    input: results/mono_preprocessed.h5ad, downloaded_data/gene2go, downloaded_data/PANTHERGOslim.obo
+    output: results/low_thresh_mono_de.csv, results/high_thresh_mono_de.csv, results/low_thresh_delist.csv, results/high_thresh_delist.csv
+    jobid: 6
+
+[Tue Jan 11 06:49:10 2022]
+Error in rule do_DE_and_enrichment:
+    jobid: 6
+    output: results/low_thresh_mono_de.csv, results/high_thresh_mono_de.csv, results/low_thresh_delist.csv, results/high_thresh_delist.csv
+
+RuleException:
+CalledProcessError in line 44 of /data3/CDR_paper/CDR_software/CDR_workflow/monocytes/snakefile:
+Command 'set -euo pipefail;  /usr/bin/python3 /data3/CDR_paper/CDR_software/CDR_workflow/monocytes/.snakemake/scripts/tmpew8qm7md.DE_analysis.py' returned non-zero exit status 1.
+  File "/data3/CDR_paper/CDR_software/CDR_workflow/monocytes/snakefile", line 44, in __rule_do_DE_and_enrichment
+  File "/usr/lib/python3.8/concurrent/futures/thread.py", line 57, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /data3/CDR_paper/CDR_software/CDR_workflow/monocytes/.snakemake/log/2022-01-11T064909.424924.snakemake.log

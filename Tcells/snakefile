@@ -1,0 +1,90 @@
+
+rule all:
+    input:
+        "figures/tsne_genesets.png"
+
+rule get_data_downloads:
+    input:
+        "resources/files.txt"
+    output:
+        "downloads/GSE115978_tpm.csv",
+        "downloads/GSE115978_cell.annotations.csv",
+        "downloads/GSE120575_Sade_Feldman_melanoma_single_cells_TPM_GEO.txt",
+        "downloads/GSE120575_patient_ID_single_cells.txt",
+        "downloads/PANTHERGOslim.obo",
+        "downloads/gene2go"
+    shell:
+        "wget -P downloads -i {input}; gunzip downloads/*.gz"
+
+rule remove_datamatrix_header_sade_felman:
+    input:
+        "downloads/GSE120575_Sade_Feldman_melanoma_single_cells_TPM_GEO.txt"
+    output:
+        "results/nohead.tsv",
+    shell:
+        'tail -n +3 {input} > {output}'
+
+rule remove_phenodata_header_sade_felman:
+    input:
+        "downloads/GSE120575_patient_ID_single_cells.txt"
+    output:
+        "results/patient_ID_single_cells.txt",
+    shell:
+        "tail -n +20 {input} | head -n -38 > {output}"
+        
+rule parse_expression_matrix_sade_felman:
+    input:
+        "resources/CD8Tcells.csv",
+        "results/nohead.tsv",
+        "downloads/GSE120575_Sade_Feldman_melanoma_single_cells_TPM_GEO.txt"
+    output:
+        "results/CD8Tcells.p"
+    script:
+        "scripts/sade_felman_parse_datamatrix.py"
+
+rule create_adata_sade_felman:
+    input:
+        "results/patient_ID_single_cells.txt",
+        "results/CD8Tcells.p"
+    output:
+        "results/clean_CD8_Tcell_sade_felman.h5ad",
+        "results/sade_felman_pheno.csv"
+    script:
+        "scripts/sade_felman_parse_pheno.py"
+        
+rule create_adata_tirosh:
+    input:
+        "downloads/GSE115978_tpm.csv",
+        "downloads/GSE115978_cell.annotations.csv"
+    output:
+        "results/CD8_tirosh.h5ad"
+    script:
+        "scripts/tirosh_parse.py"
+
+rule combine_datasets:
+    input:
+        "results/CD8_tirosh.h5ad",
+        "results/clean_CD8_Tcell_sade_felman.h5ad"
+    output:
+        "results/combined.h5ad"
+    script:
+        "scripts/combine_tirosh_sade_felman.py"
+
+rule run_CDR:
+    input:
+        "results/combined.h5ad",
+        "downloads/PANTHERGOslim.obo",
+        "downloads/gene2go"
+    output:
+        "results/enriched_Tcell.h5ad",
+    script:
+        "scripts/CDR_run_and_enrichment.py"
+        
+rule plot_figures:
+    input:
+        "results/enriched_Tcell.h5ad"
+    output:
+        "figures/tsne_genesets.png",
+        "figures/tsne_MT1E.png"
+    script:
+        "scripts/plot_diagrams.py"

@@ -1,0 +1,28 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job              count    min threads    max threads
+-------------  -------  -------------  -------------
+all                  1              1              1
+plot_diagrams        1              1              1
+total                2              1              1
+
+Select jobs to execute...
+
+[Tue Jan 11 11:54:04 2022]
+rule plot_diagrams:
+    input: results/CDR_done.h5ad, results/h_DE_only.txt
+    output: results/heatmaps_1002.pngresults/barplot_1002.png
+    jobid: 1
+    resources: tmpdir=/tmp
+
+[Tue Jan 11 11:54:11 2022]
+Error in rule plot_diagrams:
+    jobid: 1
+    output: results/heatmaps_1002.pngresults/barplot_1002.png
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /data3/CDR_paper/CDR_software/CDR_workflow/monocytes/.snakemake/log/2022-01-11T115404.315111.snakemake.log

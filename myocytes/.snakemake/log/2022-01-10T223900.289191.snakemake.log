@@ -1,0 +1,38 @@
+Migrating .snakemake folder to new format...
+Migration complete
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                        count    min threads    max threads
+-----------------------  -------  -------------  -------------
+all                            1              1              1
+download_ontology_files        1              1              1
+filter_genes                   1              1              1
+plot_figures                   1              1              1
+run_CDR                        1              1              1
+total                          5              1              1
+
+Select jobs to execute...
+
+[Mon Jan 10 22:39:00 2022]
+rule filter_genes:
+    input: resources/muscle_data.h5ad
+    output: results/myocytes_processed.h5ad
+    jobid: 3
+    resources: tmpdir=/tmp
+
+[Mon Jan 10 22:39:00 2022]
+Error in rule filter_genes:
+    jobid: 3
+    output: results/myocytes_processed.h5ad
+
+WorkflowError:
+Failed to open source file /data3/CDR_paper/CDR_software/CDR_workflow/myocytes/../scripts/muscle_dataset_preprocessing.py
+FileNotFoundError: [Errno 2] No such file or directory: '/data3/CDR_paper/CDR_software/CDR_workflow/myocytes/../scripts/muscle_dataset_preprocessing.py'
+  File "/home/ubuntu/miniconda3/envs/pyenv/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+  File "/data3/CDR_paper/CDR_software/CDR_workflow/myocytes/snakefile", line 49, in __rule_filter_genes
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /data3/CDR_paper/CDR_software/CDR_workflow/myocytes/.snakemake/log/2022-01-10T223900.289191.snakemake.log
