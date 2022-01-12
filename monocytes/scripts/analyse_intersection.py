@@ -1,6 +1,5 @@
 import anndata as ad
 import pandas as pd
-from pycdr.utils import retrieve_terms_for_selected_factors
 
 INPUT_CDR = snakemake.input[0]
 INPUT_DE_LIST = snakemake.input[1]
@@ -8,6 +7,24 @@ INPUT_DE_LIST = snakemake.input[1]
 OUTPUT_CDR_ONLY = snakemake.output[1]
 OUTPUT_DE_ONLY = snakemake.output[2]
 OUTPUT_INTERSECTION_ONLY = snakemake.output[0]
+
+
+def retrieve_terms_for_selected_factors(x, factorlist):
+    # earmarked removal move to other package
+    en = x.uns["enrichment_results"]
+
+    terms = []
+    
+
+    for i in factorlist:
+        termie = en[i]
+        terms.append(termie)
+
+    flat_list = set([item for sublist in terms for item in sublist])
+
+    len(set(flat_list))
+    
+    return set(flat_list) 
 
 CDR_obj = ad.read(INPUT_CDR)
 

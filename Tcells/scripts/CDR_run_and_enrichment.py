@@ -3,13 +3,13 @@
 
 import anndata as ad
 from pycdr.pycdr import run_CDR_analysis
-from enrich_cdr.encdr import do_enrichment_all
+from enrichment_utils.ontology_analysis import analyse_adata
 
 x = ad.read(snakemake.input[0])
 
 run_CDR_analysis(x, "response_pheno")
 
-do_enrichment_all(x, snakemake.input[1], 
+analyse_adata(x, snakemake.input[1], 
                   snakemake.input[2], 
                   "human", 
                   threshold_pvalue = 0.05, 

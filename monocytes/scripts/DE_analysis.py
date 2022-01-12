@@ -1,8 +1,7 @@
 import anndata as ad
 import scanpy as sc
-from enrich_cdr.encdr import do_enrichment_on_list
 import pandas as pd
-
+from enrichment_utils.ontology_analysis import analyse_list
 
 INPUT_FILE = snakemake.input[0]
 INPUT_FILE_GENE2GO = snakemake.input[1]
@@ -58,10 +57,10 @@ x.raw = adata
 a,b,c = get_DE_genes(x, "stim", "CTRL", "STIM", 0.5, 0.1) # low log
 e,f,g = get_DE_genes(x, "stim", "CTRL", "STIM", 1.0, 0.05) # strict
 
-gos, enrichment1_low = do_enrichment_on_list(a, INPUT_FILE_ONTOLOGY, INPUT_FILE_GENE2GO, "human")
-gos, enrichment2_low = do_enrichment_on_list(b, INPUT_FILE_ONTOLOGY, INPUT_FILE_GENE2GO, "human")
-gos, enrichment3_high = do_enrichment_on_list(e, INPUT_FILE_ONTOLOGY, INPUT_FILE_GENE2GO, "human")
-gos, enrichment4_high = do_enrichment_on_list(f, INPUT_FILE_ONTOLOGY, INPUT_FILE_GENE2GO, "human")
+gos, enrichment1_low = analyse_list(a, INPUT_FILE_ONTOLOGY, INPUT_FILE_GENE2GO, "human")
+gos, enrichment2_low = analyse_list(b, INPUT_FILE_ONTOLOGY, INPUT_FILE_GENE2GO, "human")
+gos, enrichment3_high = analyse_list(e, INPUT_FILE_ONTOLOGY, INPUT_FILE_GENE2GO, "human")
+gos, enrichment4_high = analyse_list(f, INPUT_FILE_ONTOLOGY, INPUT_FILE_GENE2GO, "human")
 
 combine_output_of_lists(enrichment1_low, enrichment2_low, OUTPUT_DE_ENRICHMENT_LOW)
 combine_output_of_lists(enrichment3_high, enrichment4_high, OUTPUT_DE_ENRICHMENT_HIGH)

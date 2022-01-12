@@ -11,12 +11,12 @@ INPUT_FILE_ONTOLOGY = snakemake.input[2]
 OUTPUT = snakemake.output[0]
 
 
-mono = ad.read(INPUT)
+x = ad.read(INPUT)
 
-run_CDR_analysis(mono, "Hours")
+run_CDR_analysis(x, "Hours")
 
-analyse_adata(mono, INPUT_FILE_ONTOLOGY, INPUT_FILE_GENE2GO, "human", threshold_pvalue = 0.05, ontology_subset = "BP", prop = False)
-factor_list = [i for i in mono.uns["factor_loadings"].keys()]
+analyse_adata(x, INPUT_FILE_ONTOLOGY, INPUT_FILE_GENE2GO, "human", threshold_pvalue = 0.05, ontology_subset = "BP", prop = False)
+factor_list = [i for i in x.uns["factor_loadings"].keys()]
 calculate_enrichment(mono, "Hours", factor_list, 100, "gene_short_name", 0.05)
 
 mono.write(OUTPUT)
