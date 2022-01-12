@@ -5,4 +5,4 @@ This repository contains the snakemake workflows required to generate the result
 
 # Recommended dependencies:
 
-Whilst not required for CDR, scanpy, bbknn and enrichment_utils are both required to generate the diagrams in workflow. Please refer to the [CDR page](https://github.com/wlchin/pycdr)for additional installation information.
+Whilst not required for CDR, scanpy, bbknn and enrichment_utils are both required to generate the diagrams in workflow. Please refer to the [CDR page](https://github.com/wlchin/pycdr) for additional installation information.
