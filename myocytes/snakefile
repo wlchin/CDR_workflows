@@ -2,8 +2,9 @@
 rule all:
     input:
         "results/muscle_factors.png",
-        "results/muscle_genes.png"
-
+        "results/muscle_genes.png",
+        "figures/umap.png"
+        
 rule download_ontology_files:
     input:
         "resources/files.txt"
@@ -31,12 +32,20 @@ rule run_CDR:
     script:
         "scripts/run_CDR_muscle.py"
 
-rule plot_figures:
+rule run_clustering_and_single_cell_enrichment:
     input:
         "results/CDR_done.h5ad"
+    output:
+        "results/CDR_done_enriched.h5ad",
+        "figures/umap.png"
+    script:
+        "scripts/myocytes_umap.py"
+
+rule plot_figures:
+    input:
+        "results/CDR_done_enriched.h5ad"
     output:
         "results/muscle_factors.png",
         "results/muscle_genes.png"
     script:
-        "scripts/plot_figures_myocytes.py"
-    
+        "scripts/plot_myocyte_diagrams.py"

@@ -4,11 +4,7 @@
 import pandas as pd
 import anndata as ad
 import scanpy as sc
-from pycdr.utils import get_top_genes
 from pycdr.perm import calculate_enrichment
-import matplotlib.ticker as ticker
-import numpy as np
-import matplotlib.pyplot as plt
 
 muscle = ad.read(snakemake.input[0])
 
@@ -19,10 +15,8 @@ sc.tl.pca(muscle, svd_solver='arpack')
 sc.pp.neighbors(muscle, n_neighbors = 20, n_pcs=40)
 sc.tl.umap(muscle)
 
-sc.pl.umap(muscle, color = ["factor.8", "factor.7", "Hours"], add_outline = True, size = 200)
+sc.pl.umap(muscle, color = ["factor.8", "factor.7", "Hours"], add_outline = True, size = 200, save = ".png")
 
 muscle.obs["Hours"] = muscle.obs["Hours"].astype("category")
 
 muscle.write(snakemake.output[0])
-
-

@@ -1,6 +1,6 @@
 import scanpy as sc
 import anndata as ad
-from pycdr.pp import filter_genecounts_numcells, filter_genecounts_percent
+from pycdr.utils import filter_genecounts_numcells, filter_genecounts_percent
 
 muscle = ad.read(snakemake.input[0])
 muscle.var_names_make_unique()

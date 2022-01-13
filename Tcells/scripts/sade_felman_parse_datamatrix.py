@@ -28,7 +28,7 @@ with pd.read_csv(snakemake.input[1], chunksize=chunksize, sep = '\t', header = N
         a.columns = colnames_of_raw_datafile
         select_relevant_cells = a.columns[a.columns.isin(CD8Tcells)]
         processed_chunked = a[select_relevant_cells]
-        chunk_filenamefilename = "chunk" + str(i) + ".csv"
+        chunk_filename = "chunk" + str(i) + ".csv"
         processed_chunked.to_csv(chunk_filename)
 
 csv_chunks = glob.glob("*.csv")

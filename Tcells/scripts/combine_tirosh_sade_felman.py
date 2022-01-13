@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[98]:
-
-
 import anndata as ad
 import scanpy as sc
-from pycdr.pp import filter_genecounts_percent, filter_genecounts_numcells
+from pycdr.utils import filter_genecounts_percent
 import numpy as np
 
 tirosh = ad.read(snakemake.input[0])
@@ -32,7 +29,9 @@ combined_dataset.var["features"] = combined_dataset.var["features-1"]
 
 combined_dataset_filtered = filter_genecounts_percent(combined_dataset, 0.01, 1)
 combined_dataset_filtered = combined_dataset_filtered.copy()
-a.write(snakemake.output[0])
+
+print("dimensions: ", str(combined_dataset_filtered.shape))
+combined_dataset_filtered.write(snakemake.output[0])
 
 
 

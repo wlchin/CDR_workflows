@@ -1,7 +1,8 @@
 
 rule all:
     input:
-        "figures/tsne_genesets.png"
+        #"figures/tsne_genesets.png"
+        "results/combined.h5ad"
 
 rule get_data_downloads:
     input:

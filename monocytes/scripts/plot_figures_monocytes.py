@@ -3,12 +3,11 @@
 
 # In[4]:
 
-
 import anndata as ad
 import seaborn as sns
 import pandas as pd
 import numpy as np
-from pycdr.welford_gene_selection import get_df_for_factor
+from pycdr.utils import get_top_genes
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as path_effects
 
@@ -28,10 +27,10 @@ coords_976 = [(0,20), (40,0), (40,0), (-25,20), (0,-30)]
 
 def process_data_for_barplots(x, factor_of_interest, degenes, geneindex):
     
-    genesofinterest = get_df_for_factor(x, factor_of_interest).sort_values("z_score", ascending = False)
+    genesofinterest = get_top_genes(x, factor_of_interest).sort_values("z_score", ascending = False)
     genes = genesofinterest.head(20).index.to_list()
     
-    loadingscores = get_df_for_factor(x, factor_of_interest).sort_values("z_score", ascending = False)
+    loadingscores = get_top_genes(x, factor_of_interest).sort_values("z_score", ascending = False)
     scores = loadingscores.head(20).z_score.to_list()
     color_list = []
     
@@ -98,7 +97,7 @@ def process_data_for_scatterplot(x, factor, genelist, pheno1, pheno2):
 
 
 def process_data_for_heatmaps(x, factor_of_interest):
-    genes = get_df_for_factor(x, factor_of_interest).sort_values("z_score", ascending = False)
+    genes = get_top_genes(x, factor_of_interest).sort_values("z_score", ascending = False)
     genesofinterest = genes.head(20).index.to_list() 
 
     inder = x.var.features.isin(genesofinterest)
