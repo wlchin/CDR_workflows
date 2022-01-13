@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[4]:
+
 
 import anndata as ad
 import seaborn as sns
@@ -12,17 +12,11 @@ import matplotlib.pyplot as plt
 import matplotlib.patheffects as path_effects
 
 
-# In[ ]:
-
-
 # specific details for scatterplot
 #['factor.1002', 'factor.1553', 'factor.976']
 coords_1002 = [(0,20), (0,20), (0,20), (0,20), (0,20)]
 coords_1553 = [(0,20), (40,0), (25,25), (-25,20), (0,-30)]
 coords_976 = [(0,20), (40,0), (40,0), (-25,20), (0,-30)]
-
-
-# In[53]:
 
 
 def process_data_for_barplots(x, factor_of_interest, degenes, geneindex):
@@ -74,8 +68,6 @@ def plot_barplots(Product, Quantity, color_list, filename):
     plt.savefig(filename, dpi = 300)
 
 
-# In[19]:
-
 
 def process_data_for_scatterplot(x, factor, genelist, pheno1, pheno2):
     
@@ -92,8 +84,6 @@ def process_data_for_scatterplot(x, factor, genelist, pheno1, pheno2):
     y1 = nonstimcounts
     return stimcounts, nonstimcounts
 
-
-# In[29]:
 
 
 def process_data_for_heatmaps(x, factor_of_interest):
@@ -134,8 +124,6 @@ def process_data_for_heatmaps(x, factor_of_interest):
     return resp, nonresp, genesofinterest
 
 
-# In[37]:
-
 
 def plot_heatmaps(resp, nonresp, filename, thres = 0.10):
     fig, (ax1, ax2) = plt.subplots(1,2, figsize = (10,5), gridspec_kw={'width_ratios': [1, 1]})
@@ -167,8 +155,6 @@ def plot_heatmaps(resp, nonresp, filename, thres = 0.10):
 
     plt.savefig(filename, dpi = 300)
 
-
-# In[27]:
 
 
 def plot_scatterplot(X, Y, filename):
@@ -239,19 +225,10 @@ def plot_scatterplot(X, Y, filename):
     plt.savefig(filename, dpi = 300)
 
 
-# In[5]:
-
 
 x = ad.read(snakemake.input[0])
 
-
-# In[51]:
-
-
 degenes = pd.read_csv(snakemake.input[1])["0"]
-
-
-# In[59]:
 
 
 a,b,c = process_data_for_heatmaps(x, 976)
@@ -270,10 +247,4 @@ a,b,c = process_data_for_heatmaps(x, 1553)
 plot_heatmaps(a,b, "results/heatmaps_1553.png", 0.15)
 e,f,g = process_data_for_barplots(x, 1553, degenes, a.index)
 plot_barplots(e,f,g, "results/barplot_1553.png")
-
-
-# In[ ]:
-
-
-
 
