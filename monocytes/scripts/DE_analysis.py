@@ -14,9 +14,6 @@ OUTPUT_DE_LIST_HIGH = snakemake.output[3]
 
 
 def get_DE_genes(adata, factor, pheno1, pheno2, lfc, fdr):
-
-    # todo this still needs tidying up and will fit into the logcomp function
-    # probably move into the enrich_cdr function later.
     adata.var_names_make_unique()
     adata_filtered = adata[(adata.obs[factor] == pheno1) | (adata.obs[factor] == pheno2)]
     adata_filtered.obs[factor] = adata_filtered.obs[factor].astype("string")
@@ -47,7 +44,6 @@ def combine_output_of_lists(set1, set2, outputfile):
     x.to_csv(outputfile)
 
 
-# replacing raw spot for anndata
 x = ad.read(INPUT_FILE)
 adata = x.raw.to_adata() # remember that 
 sc.pp.normalize_total(adata, target_sum=1e4)

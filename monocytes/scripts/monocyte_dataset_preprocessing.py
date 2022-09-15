@@ -4,15 +4,15 @@ import anndata as ad
 from pycdr.utils import filter_genecounts_numcells, filter_genecounts_percent
 import scanpy as sc
 
-mononess = ad.read(snakemake.input[0])
+mono = ad.read(snakemake.input[0])
 
-duo = filter_genecounts_percent(mononess, 0.01, 1)
-uno = filter_genecounts_numcells(duo, 0, 100)
+mono = filter_genecounts_percent(mono, 0.01, 1)
+mono = filter_genecounts_numcells(mono, 0, 100)
 
-uno.raw = uno.raw.to_adata()
+mono.raw = mono.raw.to_adata()
 
-sc.pp.log1p(uno)
-sc.pp.scale(uno, zero_center = False)
+sc.pp.log1p(mono)
+sc.pp.scale(mono, zero_center = False)
 
-uno.write(snakemake.output[0])
+mono.write(snakemake.output[0])
 
