@@ -17,6 +17,8 @@ rule filter_genes:
         "resources/raw_monocyte_CD14.h5ad"
     output:
         "results/mono_preprocessed.h5ad"
+    singularity:
+        "docker://wlc27/pycdr:v3"
     script:
         "scripts/monocyte_dataset_preprocessing.py"
 
@@ -27,6 +29,8 @@ rule run_CDR_and_enrichment:
         "downloaded_data/PANTHERGOslim.obo"
     output:
         "results/CDR_done.h5ad"
+    singularity:
+        "docker://wlc27/pycdr:v3"
     script:
         "scripts/run_CDR_monocyte.py"
 
@@ -40,6 +44,8 @@ rule do_DE_and_enrichment:
         "results/high_thresh_mono_de.csv",
         "results/low_thresh_delist.csv",
         "results/high_thresh_delist.csv"
+    singularity:
+        "docker://wlc27/pycdr:v3"
     script:
         "scripts/DE_analysis.py"
 
@@ -51,6 +57,8 @@ rule compare_CDR_to_DE_low_thresh:
         "results/l_intersection.txt",
         "results/l_CDR_only.txt",
         "results/l_DE_only.txt"
+    singularity:
+        "docker://wlc27/pycdr:v3"
     script:
         "scripts/analyse_intersection.py"
 
@@ -62,6 +70,8 @@ rule compare_CDR_to_DE_high_thresh:
         "results/h_intersection.txt",
         "results/h_CDR_only.txt",
         "results/h_DE_only.txt"
+    singularity:
+        "docker://wlc27/pycdr:v3"
     script:
         "scripts/analyse_intersection.py"
 
@@ -72,6 +82,8 @@ rule plot_diagrams:
     output:
         "results/heatmaps_1002.png",
         "results/barplot_1002.png"
+    singularity:
+        "docker://wlc27/pycdr:v3"
     script:
         "scripts/plot_figures_monocytes.py"
 
