@@ -43,7 +43,7 @@ rule run_CDR_factor_loading_enrichment:
     singularity:
         "docker://wlc27/pycdr:v3"
     script:
-        "scripts/run_CDR_monocyte.py"
+        "scripts/run_CDR_monocyte_enrichment.py"
 
 rule do_DE_and_enrichment:
     input:
