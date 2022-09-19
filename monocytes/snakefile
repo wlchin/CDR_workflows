@@ -22,13 +22,24 @@ rule filter_genes:
     script:
         "scripts/monocyte_dataset_preprocessing.py"
 
-rule run_CDR_and_enrichment:
+rule run_CDR:
     input:
         "results/mono_preprocessed.h5ad",
+    output:
+        "results/CDR_done.h5ad"
+    singularity:
+        "docker://wlc27/pycdr:v3"
+    script:
+        "scripts/run_CDR_monocyte.py"
+
+rule run_CDR_factor_loading_enrichment:
+    input:
+        "results/CDR_done.h5ad",
         "downloaded_data/gene2go",
         "downloaded_data/PANTHERGOslim.obo"
     output:
-        "results/CDR_done.h5ad"
+        "results/CDR_done_enrichment.h5ad",
+        "results/CDR_done_enrichment_props.h5ad"
     singularity:
         "docker://wlc27/pycdr:v3"
     script:
@@ -64,7 +75,7 @@ rule compare_CDR_to_DE_low_thresh:
 
 rule compare_CDR_to_DE_high_thresh:
     input:
-        "results/CDR_done.h5ad",
+        "results/CDR_done_enrichment_props.h5ad",
         "results/high_thresh_mono_de.csv"
     output:
         "results/h_intersection.txt",
@@ -77,7 +88,7 @@ rule compare_CDR_to_DE_high_thresh:
 
 rule plot_diagrams:
     input:
-        "results/CDR_done.h5ad",
+        "results/CDR_done_enrichment_props.h5ad",
         "results/h_DE_only.txt"
     output:
         "results/heatmaps_1002.png",
