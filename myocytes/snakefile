@@ -19,6 +19,8 @@ rule filter_genes:
         "resources/muscle_data.h5ad"
     output:
         "results/myocytes_processed.h5ad"
+    singularity:
+        "docker://wlc27/pycdr:v3"
     script:
         "scripts/muscle_dataset_preprocessing.py"
 
@@ -29,6 +31,8 @@ rule run_CDR:
         "downloaded_data/PANTHERGOslim.obo"
     output:
         "results/CDR_done.h5ad"
+    singularity:
+        "docker://wlc27/pycdr:v3"
     script:
         "scripts/run_CDR_muscle.py"
 
@@ -38,6 +42,8 @@ rule run_clustering_and_single_cell_enrichment:
     output:
         "results/CDR_done_enriched.h5ad",
         "figures/umap.png"
+    singularity:
+        "docker://wlc27/pycdr:v3"
     script:
         "scripts/myocytes_umap.py"
 
@@ -47,5 +53,7 @@ rule plot_figures:
     output:
         "results/muscle_factors.png",
         "results/muscle_genes.png"
+    singularity:
+        "docker://wlc27/pycdr:v3"
     script:
         "scripts/plot_myocyte_diagrams.py"
