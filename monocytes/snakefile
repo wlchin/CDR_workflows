@@ -73,6 +73,19 @@ rule compare_CDR_to_DE_low_thresh:
     script:
         "scripts/analyse_intersection.py"
 
+rule compare_CDR_to_DE_standard_thresh:
+    input:
+        "results/CDR_done.h5ad",
+        "results/high_thresh_mono_de.csv"
+    output:
+        "results/std_intersection.txt",
+        "results/std_CDR_only.txt",
+        "results/std_DE_only.txt"
+    singularity:
+        "docker://wlc27/pycdr:v3"
+    script:
+        "scripts/analyse_intersection.py"
+
 rule compare_CDR_to_DE_high_thresh:
     input:
         "results/CDR_done_enrichment_props.h5ad",
