@@ -4,15 +4,22 @@ rule all:
         "results/muscle_factors.png",
         "results/muscle_genes.png",
         "figures/umap.png"
-        
-rule download_ontology_files:
+
+rule extract_gene2go:
     input:
-        "resources/files.txt"
+        "../shared_resources/gene2go.gz"
     output:
-        "downloaded_data/gene2go",
-        "downloaded_data/PANTHERGOslim.obo"
-    shell:
-        "wget -P downloaded_data -i {input}; gunzip downloaded_data/*.gz"
+        "data/gene2go"
+    shell:  
+        "gunzip -c {input} > {output}"
+
+rule copy_ontology_file:
+    input:
+        "../shared_resources/PANTHERGOslim.obo"
+    output:
+        "data/PANTHERGOslim.obo"
+    shell:  
+        "cp {input} {output}"
         
 rule filter_genes:
     input:
@@ -27,8 +34,8 @@ rule filter_genes:
 rule run_CDR:
     input:
         "results/myocytes_processed.h5ad",
-        "downloaded_data/gene2go",
-        "downloaded_data/PANTHERGOslim.obo"
+        "data/gene2go",
+        "data/PANTHERGOslim.obo"
     output:
         "results/CDR_done.h5ad"
     singularity:
@@ -43,7 +50,7 @@ rule run_clustering_and_single_cell_enrichment:
         "results/CDR_done_enriched.h5ad",
         "figures/umap.png"
     singularity:
-        "docker://wlc27/pycdr:v3"
+        "docker://wlc27/pycdr:v4"
     script:
         "scripts/myocytes_umap.py"
 
@@ -54,6 +61,6 @@ rule plot_figures:
         "results/muscle_factors.png",
         "results/muscle_genes.png"
     singularity:
-        "docker://wlc27/pycdr:v3"
+        "docker://wlc27/pycdr:v4"
     script:
         "scripts/plot_myocyte_diagrams.py"

@@ -1,16 +1,24 @@
 rule all:
     input:
         "results/heatmaps_1002.png",
-        "results/barplot_1002.png",
+        "results/heatmaps_976.png",
+        "results/heatmaps_1553.png"
 
-rule download_ontology_files:
+rule extract_gene2go:
     input:
-        "resources/files.txt"
+        "../shared_resources/gene2go.gz"
     output:
-        "downloaded_data/gene2go",
-        "downloaded_data/PANTHERGOslim.obo"
-    shell:
-        "wget -P downloaded_data -i {input}; gunzip downloaded_data/*.gz"
+        "data/gene2go"
+    shell:  
+        "gunzip -c {input} > {output}"
+
+rule copy_ontology_file:
+    input:
+        "../shared_resources/PANTHERGOslim.obo"
+    output:
+        "data/PANTHERGOslim.obo"
+    shell:  
+        "cp {input} {output}"
 
 rule filter_genes:
     input:
@@ -35,8 +43,8 @@ rule run_CDR:
 rule run_CDR_factor_loading_enrichment:
     input:
         "results/CDR_done.h5ad",
-        "downloaded_data/gene2go",
-        "downloaded_data/PANTHERGOslim.obo"
+        "data/gene2go",
+        "data/PANTHERGOslim.obo"
     output:
         "results/CDR_done_enrichment.h5ad",
         "results/CDR_done_enrichment_props.h5ad"
@@ -48,8 +56,8 @@ rule run_CDR_factor_loading_enrichment:
 rule do_DE_and_enrichment:
     input:
         "results/mono_preprocessed.h5ad",
-        "downloaded_data/gene2go",
-        "downloaded_data/PANTHERGOslim.obo"
+        "data/gene2go",
+        "data/PANTHERGOslim.obo"
     output:
         "results/low_thresh_mono_de.csv",
         "results/high_thresh_mono_de.csv",
@@ -105,7 +113,8 @@ rule plot_diagrams:
         "results/h_DE_only.txt"
     output:
         "results/heatmaps_1002.png",
-        "results/barplot_1002.png"
+        "results/heatmaps_976.png",
+        "results/heatmaps_1553.png"
     singularity:
         "docker://wlc27/pycdr:v3"
     script:
