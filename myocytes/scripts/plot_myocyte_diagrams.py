@@ -53,5 +53,22 @@ fig.tight_layout(pad = 4.0)
 plt.savefig("results/muscle_genes.png", dpi = 300)
 
 
+factors = ["factor.7", "factor.8"]
 
+fig, ax = plt.subplots(1,2, figsize = (9,3))                                                                                                                                                                         
+for i in range(2):                                                                                                                                                                                                   
+    factor_loading = factors[i]                                                                                                                                                                                      
+    info = adata.uns["dict_res_prop"][factor_loading]                                                                                                                                                                
+    timepoints = np.array(info[2]).astype("str")                                                                                                                                                                     
+    vals = (np.array(info[0]).astype("int"))/(np.array(info[1]).astype("int")) * 100                                                                                                                                 
+    ax[i].bar(timepoints,vals, color = "black")                                                                                                                                                                      
+    ax[i].set_xlabel("Hours", fontsize = "x-large")                                                                                                                                                                                                                                                                                                         
+    ax[i].set_title(factor_loading, fontsize = "x-large", pad=10)                                                                                                                                                    
+    ax[i].set_ylim((0,35))                                                                                                                                                                                           
+    ax[i].spines['top'].set_visible(False)                                                                                                                                                                           
+    ax[i].spines['right'].set_visible(False)                                                                                                                                                                         
+    ax[i].spines['bottom'].set_visible(True)  
+    
+fig.supylabel("% activated cells", fontsize = "xx-large")
+fig.savefig("results/bar_chart_subpopulations.png", dpi = 500)
 
