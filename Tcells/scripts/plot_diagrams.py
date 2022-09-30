@@ -51,3 +51,11 @@ sc.pl.tsne(adata_all, color = ["Exhaustion", "TIGIT", "PDCD1",
 
 
 
+
+sc.tl.leiden(adata_all, resolution = 5.0) # 3 and 15 for this.
+sc.pl.tsne(adata_all, color=["leiden"], legend_loc = "on data", save="leidenbignonum.png")
+
+cl1 = adata_all[adata_all.obs['leiden'].isin(["1", "6", "19"]),:]
+
+sc.tl.rank_genes_groups(cl1, "leiden", method="wilcoxon")
+sc.pl.rank_genes_groups(cl1, n_genes=25, sharey=False, save="_DEresult_multicluster.png")
