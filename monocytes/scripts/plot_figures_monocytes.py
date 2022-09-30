@@ -10,6 +10,7 @@ import numpy as np
 from pycdr.utils import get_top_genes
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as path_effects
+import scanpy as sc
 
 
 # specific details for scatterplot
@@ -71,8 +72,10 @@ def plot_barplots(Product, Quantity, color_list, filename):
 
 def process_data_for_scatterplot(x, factor, genelist, pheno1, pheno2):
     
-    ctrl = x[x.obs[factor] == pheno1].copy()
-    stim = x[x.obs[factor] == pheno2].copy()
+    factor_ = "factor." + str(factor)
+
+    ctrl = x[x.obs[factor_] == pheno1].copy()
+    stim = x[x.obs[factor_] == pheno2].copy()
     genesstim = sc.pp.calculate_qc_metrics(stim)[1]
     genesctrl = sc.pp.calculate_qc_metrics(ctrl)[1]
     factor0 = genelist
@@ -157,19 +160,19 @@ def plot_heatmaps(resp, nonresp, filename, thres = 0.10):
 
 
 
-def plot_scatterplot(X, Y, filename):
+def plot_scatterplot(X, Y, genes, filename):
 
     fig, ax = plt.subplots(figsize = (5,5))
     #ax.plot(x, y, ls='--', color = 'red')
 
-    X = a
-    Y = b
-    #X = a.reindex(genes)
-    #Y = b.reindex(genes)
+    #X = a
+    #Y = b
+    X = X.reindex(genes)
+    Y = Y.reindex(genes)
 
     toplevel = np.ceil(np.max([X,Y]))
 
-    toplevel = np.round(np.max([X,Y]), 1)
+    #toplevel = np.round(np.max([X,Y]), 1)
 
     plt.ylim(-0.05, toplevel + 0.05)
     plt.xlim(-0.05, toplevel + 0.05)
@@ -235,16 +238,22 @@ a,b,c = process_data_for_heatmaps(x, 976)
 plot_heatmaps(a,b, "results/heatmaps_976.png", 0.15)
 e,f,g = process_data_for_barplots(x, 976, degenes, a.index)
 plot_barplots(e,f,g, "results/barplot_976.png")
+h, i = process_data_for_scatterplot(x, "stim", c, "CTRL", "STIM")
+plot_scatterplot(h, i, c, "results/scaterplot_976.png")
 
 
 a,b,c = process_data_for_heatmaps(x, 1002)
 plot_heatmaps(a,b, "results/heatmaps_1002.png", 0.15)
 e,f,g = process_data_for_barplots(x, 1002, degenes, a.index)
 plot_barplots(e,f,g, "results/barplot_1002.png")
+h, i = process_data_for_scatterplot(x, "stim", c, "CTRL", "STIM")
+plot_scatterplot(h, i, c, "results/scaterplot_1002.png")
 
 
 a,b,c = process_data_for_heatmaps(x, 1553)
 plot_heatmaps(a,b, "results/heatmaps_1553.png", 0.15)
 e,f,g = process_data_for_barplots(x, 1553, degenes, a.index)
 plot_barplots(e,f,g, "results/barplot_1553.png")
+h, i = process_data_for_scatterplot(x, "stim", c, "CTRL", "STIM")
+plot_scatterplot(h, i, c, "results/scaterplot_1553.png")
 
