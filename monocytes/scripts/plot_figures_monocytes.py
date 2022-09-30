@@ -72,10 +72,10 @@ def plot_barplots(Product, Quantity, color_list, filename):
 
 def process_data_for_scatterplot(x, factor, genelist, pheno1, pheno2):
     
-    factor_ = "factor." + str(factor)
+    #factor_ = "factor." + str(factor)
 
-    ctrl = x[x.obs[factor_] == pheno1].copy()
-    stim = x[x.obs[factor_] == pheno2].copy()
+    ctrl = x[x.obs[factor] == pheno1].copy()
+    stim = x[x.obs[factor] == pheno2].copy()
     genesstim = sc.pp.calculate_qc_metrics(stim)[1]
     genesctrl = sc.pp.calculate_qc_metrics(ctrl)[1]
     factor0 = genelist
@@ -170,7 +170,7 @@ def plot_scatterplot(X, Y, genes, filename):
     X = X.reindex(genes)
     Y = Y.reindex(genes)
 
-    toplevel = np.ceil(np.max([X,Y]))
+    toplevel = np.max([X,Y])
 
     #toplevel = np.round(np.max([X,Y]), 1)
 
@@ -239,7 +239,7 @@ plot_heatmaps(a,b, "results/heatmaps_976.png", 0.15)
 e,f,g = process_data_for_barplots(x, 976, degenes, a.index)
 plot_barplots(e,f,g, "results/barplot_976.png")
 h, i = process_data_for_scatterplot(x, "stim", c, "CTRL", "STIM")
-plot_scatterplot(h, i, c, "results/scaterplot_976.png")
+plot_scatterplot(i, h, c, "results/scaterplot_976.png")
 
 
 a,b,c = process_data_for_heatmaps(x, 1002)
@@ -247,7 +247,7 @@ plot_heatmaps(a,b, "results/heatmaps_1002.png", 0.15)
 e,f,g = process_data_for_barplots(x, 1002, degenes, a.index)
 plot_barplots(e,f,g, "results/barplot_1002.png")
 h, i = process_data_for_scatterplot(x, "stim", c, "CTRL", "STIM")
-plot_scatterplot(h, i, c, "results/scaterplot_1002.png")
+plot_scatterplot(i, h, c, "results/scaterplot_1002.png")
 
 
 a,b,c = process_data_for_heatmaps(x, 1553)
@@ -255,5 +255,5 @@ plot_heatmaps(a,b, "results/heatmaps_1553.png", 0.15)
 e,f,g = process_data_for_barplots(x, 1553, degenes, a.index)
 plot_barplots(e,f,g, "results/barplot_1553.png")
 h, i = process_data_for_scatterplot(x, "stim", c, "CTRL", "STIM")
-plot_scatterplot(h, i, c, "results/scaterplot_1553.png")
+plot_scatterplot(i, h, c, "results/scaterplot_1553.png")
 
