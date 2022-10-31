@@ -27,7 +27,7 @@ sc.pp.neighbors(adata_all, n_neighbors=30, n_pcs=25)
 sc.tl.leiden(adata_all, resolution = 1.0)
 sc.tl.tsne(adata_all)
 
-sc.pl.tsne(adata_all, color=["leiden", "factor.1192", "MT1E"], save = "_MT1E.png")
+sc.pl.tsne(adata_all, color=["leiden", "factor.1192", "MT1E"], legend_loc='on data', save = "_MT1E.png")
 
 
 cl1 = adata_all[adata_all.obs['leiden'].isin(["5"]),:]
@@ -53,7 +53,7 @@ sc.pl.tsne(adata_all, color = ["Exhaustion", "TIGIT", "PDCD1",
 
 
 sc.tl.leiden(adata_all, resolution = 5.0) # 3 and 15 for this.
-sc.pl.tsne(adata_all, color=["leiden"], legend_loc = "on data", save="leidenbignonum.png")
+sc.pl.tsne(adata_all, color=["leiden"], save="leidenbignonum.png")
 
 cl1 = adata_all[adata_all.obs['leiden'].isin(["1", "6", "19"]),:]
 
