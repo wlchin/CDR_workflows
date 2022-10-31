@@ -2,7 +2,10 @@ rule all:
     input:
         "results/enriched_Tcell.h5ad",
         "figures/tsne_genesets.png",
-        "figures/tsne_MT1E.png"
+        "figures/tsne_MT1E.png",
+        "figures/tsneleidenbignonum.png",
+        "figures/rank_genes_groups_factor.1192_DEresult.png",
+        "figures/rank_genes_groups_leiden_DEresult_multicluster.png"
 
 rule extract_gene2go:
     input:
@@ -112,6 +115,9 @@ rule plot_figures:
         "docker://wlc27/pycdr:v4"
     output:
         "figures/tsne_genesets.png",
-        "figures/tsne_MT1E.png"
+        "figures/tsne_MT1E.png",
+        "figures/tsneleiden_small_clusters.png",
+        "figures/rank_genes_groups_factor.1192_DEresult.png",
+        "figures/rank_genes_groups_leiden_DEresult_multicluster.png"
     script:
         "scripts/plot_diagrams.py"
